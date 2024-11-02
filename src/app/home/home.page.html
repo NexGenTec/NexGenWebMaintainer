@@ -1,11 +1,14 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <img src="assets/img/LogoNexGen.jpg" alt="Logo NexGenWebMaintainer" class="logo" />
+      <ion-menu-button (click)="openMenu()"></ion-menu-button>
     </ion-buttons>
-    <ion-title>
-      NexGenWebMaintainer
-    </ion-title>
+    <ion-title>Home</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()" color="danger">
+        <ion-icon name="log-out"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 

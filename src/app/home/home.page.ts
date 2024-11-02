@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { MenuController } from '@ionic/angular';
+import { AuthService } from '../service/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -7,6 +9,22 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
-  constructor() {}
+  constructor(private menu: MenuController,
+    private authService: AuthService
+  ) {}
+
+  openMenu() {
+    this.menu.open();
+  }
+
+  logout() {
+    this.authService.logout()
+      .then(() => {
+        console.log('Logged out successfully');
+      })
+      .catch(error => {
+        console.error('Error during logout:', error);
+      });
+  }
 
 }

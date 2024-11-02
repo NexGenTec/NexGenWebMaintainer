@@ -1,3 +1,26 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-split-pane contentId="main-content">
+    <ion-menu *ngIf="isLoggedIn" contentId="main-content" type="overlay">
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <img src="assets/img/LogoNexGen.jpg" alt="Logo NexGenWebMaintainer" class="logo" />
+          </ion-buttons>
+          <ion-title>NexGenWebMaintainer</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-list lines="none">
+          <ion-item routerLink="/home" routerDirection="root">
+            <ion-icon slot="start" name="home"></ion-icon>
+            <ion-label>Home</ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+    </ion-menu>
+
+    <div class="ion-page" id="main-content">
+      <ion-router-outlet></ion-router-outlet>
+    </div>
+  </ion-split-pane>
 </ion-app>
