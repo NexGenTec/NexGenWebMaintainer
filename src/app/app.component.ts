@@ -11,6 +11,7 @@ import { ItemReorderEventDetail } from '@ionic/angular';
 export class AppComponent implements OnInit {
 
   items = [
+    { title: 'Home', link: '/home' },
     { title: 'Users', link: '/users' },
     { title: 'Projects', link: '/projects' },
     { title: 'Tasks', link: '/tasks' },
