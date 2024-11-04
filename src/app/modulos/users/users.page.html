@@ -1,11 +1,96 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
+    <ion-title>Lista de usuarios</ion-title>
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-avatar slot="start"> 
+          <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+        </ion-avatar>
+      </ion-button>
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Usuarios</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  <div>
+    <!-- <ion-searchbar placeholder="Search..." [(ngModel)]="searchTerm"></ion-searchbar> -->
+    <ion-segment [(ngModel)]="segmentValue" mode="ios" (ionChange)="segmentChanged($event)">
+      <ion-segment-button value="miembros">
+        Miembros
+      </ion-segment-button>
+      <ion-segment-button value="admins">
+        Admins
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+
+  <div class="action-buttons">
+    <ion-button color="primary" (click)="addNewUser()">Add New</ion-button>
+    <ion-button color="medium" (click)="importMembers()">Import Members</ion-button>
+    <ion-button color="medium" (click)="exportMembers()">Export Members (Excel)</ion-button>
+    <ion-button color="medium" (click)="openFilters()">Filter</ion-button>
+  </div>
+
+  <ion-list>
+    <ion-item-group *ngIf="segmentValue === 'miembros'">
+      <ion-item-divider color="light">
+        <ion-label>Miembros</ion-label>
+      </ion-item-divider>
+      <ion-item lines="none" *ngFor="let user of filteredUsers | filterUsersRol:'miembros'">
+        <ion-thumbnail slot="start">
+          <img [src]="user.photo" />
+        </ion-thumbnail>
+        <ion-label>
+          <h2>{{ user.name }}</h2>
+          <p>{{ user.email }}</p>
+        </ion-label>
+        <ion-label>
+          <p>{{ user.mobile }}</p>
+        </ion-label>
+        <ion-chip [color]="user.isActive ? 'success' : 'danger'">{{ user.isActive ? 'Active' : 'Inactive' }}</ion-chip>
+        <ion-buttons slot="end">
+          <ion-button (click)="editUser(user)">
+            <ion-icon name="create-outline" color="primary"></ion-icon>
+          </ion-button>
+          <ion-button (click)="deleteUser(user)" color="danger">
+            <ion-icon name="trash-outline"></ion-icon>
+          </ion-button>
+          <ion-button color="black">
+            Ir
+          </ion-button>
+        </ion-buttons>
+      </ion-item>
+    </ion-item-group>
+
+    <ion-item-group *ngIf="segmentValue === 'admins'">
+      <ion-item-divider color="light">
+        <ion-label>Admins</ion-label>
+      </ion-item-divider>
+      <ion-item lines="none" *ngFor="let user of filteredUsers | filterUsersRol:'admins'">
+        <ion-thumbnail slot="start">
+          <img [src]="user.photo" />
+        </ion-thumbnail>
+        <ion-label>
+          <h2>{{ user.name }}</h2>
+          <p>{{ user.email }}</p>
+        </ion-label>
+        <ion-label>
+          <p>{{ user.mobile }}</p>
+        </ion-label>
+        <ion-chip [color]="user.isActive ? 'success' : 'danger'">{{ user.isActive ? 'Active' : 'Inactive' }}</ion-chip>
+        <ion-buttons slot="end">
+          <ion-button (click)="editUser(user)">
+            <ion-icon name="create-outline" color="primary"></ion-icon>
+          </ion-button>
+          <ion-button (click)="deleteUser(user)">
+            <ion-icon name="trash-outline" color="danger"></ion-icon>
+          </ion-button>
+          <ion-button color="black">
+            Ir
+          </ion-button>
+        </ion-buttons>
+      </ion-item>
+    </ion-item-group>
+  </ion-list>
 </ion-content>

@@ -7,14 +7,16 @@ import { IonicModule } from '@ionic/angular';
 import { UsersPageRoutingModule } from './users-routing.module';
 
 import { UsersPage } from './users.page';
+import { FilterUsersRolPipe } from "../../pipe/filter-users-rol.pipe";
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    UsersPageRoutingModule
-  ],
+    UsersPageRoutingModule,
+    FilterUsersRolPipe
+],
   declarations: [UsersPage]
 })
 export class UsersPageModule {}

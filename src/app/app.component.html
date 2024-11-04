@@ -1,36 +1,41 @@
 <ion-app>
   <ion-menu contentId="main-content" type="overlay">
+    <div class="menu-logo">
+      <ion-img src="https://lh3.googleusercontent.com/a/ACg8ocJ1kC00P6IWGLLUMFnamSYZ_l402ptDozectaPc4QAC1yyLIJk=s288-c-no" style="border-radius: 50%;"></ion-img>
+    </div>
     <ion-content class="ion-padding">
       <ion-list>
-        <ion-list-header>NexGen</ion-list-header>
-        <ion-note>Bienmvenido,&#64;ionicframework.com</ion-note>
+        <ion-list-header>Bienvenido,{{ userName }}</ion-list-header>
+        <ion-note>
+          {{ userEmail }}
+        </ion-note>
         <ion-list-header>Modulos</ion-list-header>
         <ion-item routerLink="/users">
-          <ion-icon name="people"></ion-icon>
+          <ion-icon name="people-outline" slot="end"></ion-icon>
           Users
         </ion-item>
         <ion-item routerLink="/control-panel">
-          <ion-icon name="settings"></ion-icon>
+          <ion-icon name="settings-outline" slot="end"></ion-icon>
           Control Panel
         </ion-item>
         <ion-item routerLink="/projects">
-          <ion-icon name="folder"></ion-icon>
+          <ion-icon name="folder-outline" slot="end"></ion-icon>
           Projects
         </ion-item>
         <ion-item routerLink="/tasks">
-          <ion-icon name="checkmark-circle"></ion-icon>
+          <ion-icon name="checkmark-circle-outline" slot="end"></ion-icon>
           Tasks
         </ion-item>
         <ion-item routerLink="/logs">
-          <ion-icon name="book"></ion-icon>
+          <ion-icon name="book-outline" slot="end"></ion-icon>
           Logs
         </ion-item>
         <ion-item routerLink="/group-chat">
-          <ion-icon name="chatbubbles"></ion-icon>
+          <ion-icon name="chatbubbles-outline" slot="end"></ion-icon>
           Group Chat
         </ion-item>
         <ion-item routerLink="/reports">
-          <ion-icon name="document-text"></ion-icon>
+          <ion-icon name="document-text-outline" slot="end"></ion-icon>
           Reports
         </ion-item>        
       </ion-list>
