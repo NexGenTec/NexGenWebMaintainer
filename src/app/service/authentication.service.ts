@@ -5,24 +5,24 @@ import { User } from '../models/User.models';
   providedIn: 'root'
 })
 export class AuthenticationService {
-  private User: User | null = null;
+  private currentUser: User | null = null;
 
   constructor() {
-    const storedUser = localStorage.getItem('User');
-    this.User = storedUser ? JSON.parse(storedUser) : null;
+    const storedUser = localStorage.getItem('currentUser');
+    this.currentUser = storedUser ? JSON.parse(storedUser) : null;
   }
 
   setCurrentUser(user: User) {
-    this.User = user;
-    localStorage.setItem('User', JSON.stringify(user));
+    this.currentUser = user;
+    localStorage.setItem('currentUser', JSON.stringify(user));
   }
 
   getCurrentUser(): User | null {
-    return this.User;
+    return this.currentUser;
   }
 
   clearCurrentUser() {
-    this.User = null;
-    localStorage.removeItem('User');
+    this.currentUser = null;
+    localStorage.removeItem('currentUser');
   }
 }

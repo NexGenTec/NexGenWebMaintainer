@@ -1,28 +1,33 @@
-import { Component } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
-import { User } from 'src/app/models/User.models';
 import { AuthenticationService } from 'src/app/service/authentication.service';
+import { AuthService } from 'src/app/service/auth.service';
 import { ToastService } from 'src/app/service/toast.service';
+import { User } from 'src/app/models/User.models';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
-export class LoginPage  {
+export class LoginPage implements OnInit {
   email: string = 'nexgentechnologies2024@gmail.com';
   password: string = 'd1#TvpB59[%0';
 
   constructor(
-    private auth: AngularFireAuth,
-    private toastService:ToastService,
-    private userService:AuthenticationService,
-    private firestore: AngularFirestore,
+    private authService: AuthService,
+    private toastService: ToastService,
+    private userService: AuthenticationService,
     private router: Router,
-    private loadingController: LoadingController) { }
+    private loadingController: LoadingController
+  ) {}
+
+  ngOnInit() {
+    if (this.authService.isAuthenticated()) {
+      this.router.navigate(['/home']);
+    }
+  }
 
   async onLogin() {
     const loading = await this.loadingController.create({
@@ -34,16 +39,15 @@ export class LoginPage  {
     await loading.present();
 
     try {
-      const userCredential = await this.auth.signInWithEmailAndPassword(this.email, this.password);
-      const firebaseUser = userCredential.user;
+      await this.authService.login(this.email, this.password);
+      const firebaseUser = await this.authService.getCurrentUser();
 
       if (firebaseUser) {
         const user: User = {
           id: firebaseUser.uid,
           email: firebaseUser.email || '',
-          name: ''
+          name: firebaseUser.displayName || ''
         };
-        this.firestore.collection<User>('user').doc(user.id).set(user, { merge: true });
         this.userService.setCurrentUser(user);
         this.toastService.presentToast('Inicio de sesión exitoso', 3000, 'bottom', 'success');
         this.router.navigate(['/home']);
@@ -55,5 +59,4 @@ export class LoginPage  {
       loading.dismiss();
     }
   }
-
 }
