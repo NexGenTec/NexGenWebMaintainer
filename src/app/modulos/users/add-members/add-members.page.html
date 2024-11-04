@@ -1,0 +1,65 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Agregar Miembro</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <form [formGroup]="memberForm" (ngSubmit)="onSubmit()">
+    <ion-list>
+
+      <ion-item>
+        <ion-label position="floating">Nombre</ion-label>
+        <ion-input formControlName="name"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Foto (URL)</ion-label>
+        <ion-input formControlName="photo"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Email</ion-label>
+        <ion-input formControlName="email" type="email"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Activo</ion-label>
+        <ion-toggle formControlName="isActive"></ion-toggle>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Rol</ion-label>
+        <ion-select formControlName="role">
+          <ion-select-option value="miembros">Miembros</ion-select-option>
+          <ion-select-option value="admins">Admins</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Fecha de Creación</ion-label>
+        <ion-datetime display-format="MMM DD, YYYY HH:mm" formControlName="creationDate"></ion-datetime>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Latitud</ion-label>
+        <ion-input formControlName="address.latitude" type="number"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Longitud</ion-label>
+        <ion-input formControlName="address.longitude" type="number"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Número de Miembro</ion-label>
+        <ion-input formControlName="memberNumber" type="number" readonly></ion-input>
+      </ion-item>
+
+    </ion-list>
+
+    <ion-button expand="full" type="submit" [disabled]="memberForm.invalid">
+      Guardar Miembro
+    </ion-button>
+  </form>
+</ion-content>

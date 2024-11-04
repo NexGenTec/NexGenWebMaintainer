@@ -12,6 +12,56 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" class="ion-padding">
 
+  <div class="button-container">
+    <ion-card class="button-wrapper">
+      <ion-button expand="full" fill="clear" routerLink="/users" class="circle-button">
+        <ion-icon name="people-outline"></ion-icon>
+      </ion-button>
+      <span>Users</span>
+    </ion-card>
+
+    <ion-card class="button-wrapper">
+      <ion-button expand="full" fill="clear" routerLink="/control-panel" class="circle-button">
+        <ion-icon name="settings-outline"></ion-icon>
+      </ion-button>
+      <span>Control Panel</span>
+    </ion-card>
+
+    <ion-card class="button-wrapper">
+      <ion-button expand="full" fill="clear" routerLink="/projects" class="circle-button">
+        <ion-icon name="folder-outline"></ion-icon>
+      </ion-button>
+      <span>Projects</span>
+    </ion-card>
+
+    <ion-card class="button-wrapper">
+      <ion-button expand="full" fill="clear" routerLink="/tasks" class="circle-button">
+        <ion-icon name="checkmark-circle-outline"></ion-icon>
+      </ion-button>
+      <span>Tasks</span>
+    </ion-card>
+
+    <ion-card class="button-wrapper">
+      <ion-button expand="full" fill="clear" routerLink="/logs" class="circle-button">
+        <ion-icon name="book-outline"></ion-icon>
+      </ion-button>
+      <span>Logs</span>
+    </ion-card>
+
+    <ion-card class="button-wrapper">
+      <ion-button expand="full" fill="clear" routerLink="/group-chat" class="circle-button">
+        <ion-icon name="chatbubbles-outline"></ion-icon>
+      </ion-button>
+      <span>Group Chat</span>
+    </ion-card>
+
+    <ion-card class="button-wrapper">
+      <ion-button expand="full" fill="clear" routerLink="/reports" class="circle-button">
+        <ion-icon name="document-text-outline"></ion-icon>
+      </ion-button>
+      <span>Reports</span>
+    </ion-card>
+  </div>
 </ion-content>
