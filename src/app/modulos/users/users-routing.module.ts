@@ -7,12 +7,13 @@ const routes: Routes = [
   {
     path: '',
     component: UsersPage
-  },  {
+  },
+  {
     path: 'add-members',
     loadChildren: () => import('./add-members/add-members.module').then( m => m.AddMembersPageModule)
   },
   {
-    path: 'member-profile',
+    path: 'member-profile/:id',
     loadChildren: () => import('./member-profile/member-profile.module').then( m => m.MemberProfilePageModule)
   }
 

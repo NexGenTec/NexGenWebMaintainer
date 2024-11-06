@@ -1,48 +1,41 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { Members } from '../models/Members.model';
+import { Members } from 'src/app/models/Members.model';
+
 @Injectable({
   providedIn: 'root'
 })
 export class MembersService {
-  private membersCollection: AngularFirestoreCollection<Members>;
+  constructor(private firestore: AngularFirestore) {}
+  
 
-  constructor(private firestore: AngularFirestore) {
-    this.membersCollection = firestore.collection<Members>('members'); // colección en Firestore
-  }
-
-  // Obtener todos los miembros
+  /**
+   * Obtiene la lista de todos los miembros.
+  */
   getMembers(): Observable<Members[]> {
-    return this.membersCollection.snapshotChanges().pipe(
-      map(actions => actions.map(a => {
-        const data = a.payload.doc.data() as Members;
-        const id = a.payload.doc.id;
-        return { id, ...data };
-      }))
-    );
+    return this.firestore.collection<Members>('members').valueChanges();
   }
 
-  // Obtener un miembro por ID
-  getMemberById(id: string): Observable<Members> {
-    return this.membersCollection.doc<Members>(id).valueChanges().pipe(
-      map(member => ({ id, ...member! }))
-    );
+  /**
+   * Obtiene un miembro específico por su ID.
+   * @param id - ID del miembro.
+   * @returns Observable con los datos del miembro.
+  */
+  getMemberById(id: string): Observable<Members | undefined> {
+    return this.firestore.collection('members').doc<Members>(id).valueChanges();
   }
 
-  // Agregar un nuevo miembro
-  addMember(member: Members): Promise<any> {
-    return this.membersCollection.add(member);
-  }
 
-  // Actualizar un miembro existente por ID
-  updateMember(id: string, member: Members): Promise<void> {
-    return this.membersCollection.doc(id).update(member);
-  }
-
-  // Eliminar un miembro por ID
-  deleteMember(id: string): Promise<void> {
-    return this.membersCollection.doc(id).delete();
+  /**
+   * Añade un nuevo miembro a la colección.
+   * @param member - Datos del miembro a añadir.
+  */
+  addMember(member: Members) {
+    const memberId = this.firestore.createId();
+    return this.firestore.collection('members').doc(memberId).set({
+      ...member,
+      id: memberId
+    });
   }
 }

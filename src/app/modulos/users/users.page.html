@@ -19,22 +19,22 @@
 <ion-content [fullscreen]="true">
   <div>
     <!-- <ion-searchbar placeholder="Search..." [(ngModel)]="searchTerm"></ion-searchbar> -->
-    <!-- <ion-segment [(ngModel)]="segmentValue" mode="ios" (ionChange)="segmentChanged($event)">
+    <ion-segment [(ngModel)]="segmentValue" mode="ios" (ionChange)="segmentChanged($event)">
       <ion-segment-button value="miembros">
         Miembros
       </ion-segment-button>
       <ion-segment-button value="admins">
         Admins
       </ion-segment-button>
-    </ion-segment> -->
+    </ion-segment>
   </div>
 
   <div class="action-buttons">
     <ion-button color="primary" (click)="addNewUser()">
       <ion-icon name="add-outline"></ion-icon>
     </ion-button>
-    <ion-button color="medium" (click)="importMembers()">Import Members</ion-button>
-    <ion-button color="success" (click)="exportMembers()">Export Members (Excel)</ion-button>
+    <!-- <ion-button color="medium" (click)="importMembers()">Import Members</ion-button>
+    <ion-button color="success" (click)="exportMembers()">Export Members (Excel)</ion-button> -->
     <ion-item>
       <ion-label>Filtros</ion-label>
       <ion-select (ionChange)="openFilters($event)">
@@ -51,54 +51,54 @@
       <ion-item-divider color="light">
         <ion-label>Miembros</ion-label>
       </ion-item-divider>
-      <ion-item lines="none" *ngFor="let user of filteredUsers | filterUsersRol:'miembros'">
-        <ion-thumbnail slot="start">
+      <ion-item lines="none" *ngFor="let member of filteredUsers">
+        <!-- <ion-thumbnail slot="start">
           <img [src]="user.photo" />
-        </ion-thumbnail>
+        </ion-thumbnail> -->
         <ion-label>
-          <h2>{{ user.name }}</h2>
-          <p>{{ user.email }}</p>
+          <h2>{{ member.name }}</h2>
+          <p>{{ member.email }}</p>
         </ion-label>
-        <ion-chip [color]="user.isActive ? 'success' : 'danger'">{{ user.isActive ? 'Active' : 'Inactive' }}</ion-chip>
+        <ion-chip [color]="member.isActive ? 'success' : 'danger'">{{ member.isActive ? 'Active' : 'Inactive' }}</ion-chip>
         <ion-buttons slot="end">
-          <ion-button (click)="editUser(user)">
+          <ion-button (click)="editMember(member)">
             <ion-icon name="create-outline" color="primary"></ion-icon>
           </ion-button>
-          <ion-button (click)="deleteUser(user)" color="danger">
+          <ion-button (click)="deleteMember(member)" color="danger">
             <ion-icon name="trash-outline"></ion-icon>
           </ion-button>
-          <ion-button color="black">
+          <ion-button color="black"  (click)="profileMember(member)">
             Ir
           </ion-button>
         </ion-buttons>
       </ion-item>
     </ion-item-group>
-
+  
     <ion-item-group *ngIf="segmentValue === 'admins'">
       <ion-item-divider color="light">
         <ion-label>Admins</ion-label>
       </ion-item-divider>
-      <ion-item lines="none" *ngFor="let user of filteredUsers | filterUsersRol:'admins'">
-        <ion-thumbnail slot="start">
+      <ion-item lines="none" *ngFor="let admin of filteredUsers">
+        <!-- <ion-thumbnail slot="start">
           <img [src]="user.photo" />
-        </ion-thumbnail>
+        </ion-thumbnail> -->
         <ion-label>
-          <h2>{{ user.name }}</h2>
-          <p>{{ user.email }}</p>
+          <h2>{{ admin.name }}</h2>
+          <p>{{ admin.email }}</p>
         </ion-label>
-        <ion-chip [color]="user.isActive ? 'success' : 'danger'">{{ user.isActive ? 'Active' : 'Inactive' }}</ion-chip>
+        <ion-chip [color]="admin.isActive ? 'success' : 'danger'">{{ admin.isActive ? 'Active' : 'Inactive' }}</ion-chip>
         <ion-buttons slot="end">
-          <ion-button (click)="editUser(user)">
+          <ion-button (click)="editMember(admin)">
             <ion-icon name="create-outline" color="primary"></ion-icon>
           </ion-button>
-          <ion-button (click)="deleteUser(user)">
+          <ion-button (click)="deleteMember(admin)">
             <ion-icon name="trash-outline" color="danger"></ion-icon>
           </ion-button>
-          <ion-button color="dark">
+          <ion-button color="dark"  (click)="profileMember(admin)">
             Ir
           </ion-button>
         </ion-buttons>
       </ion-item>
     </ion-item-group>
-  </ion-list>
+  </ion-list>  
 </ion-content>

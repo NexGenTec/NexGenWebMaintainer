@@ -1,59 +1,66 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { Members } from 'src/app/models/Members.model';
 import { AuthService } from 'src/app/service/auth.service';
-import { AddMembersPageModule } from './add-members/add-members.module';
 import { AddMembersPage } from './add-members/add-members.page';
+import { MembersService } from 'src/app/service/members.service';
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.page.html',
   styleUrls: ['./users.page.scss'],
 })
-export class UsersPage  {
+export class UsersPage implements OnInit{
+
+  filteredUsers: Members[] = [];
+  searchTerm = '';
+  segmentValue: string = 'miembros';
+  members: Members[] = [];
 
   constructor(
     private authService: AuthService,
     private router: Router,
-    private modalController: ModalController) {}
+    private route: ActivatedRoute,
+    private modalController: ModalController,
+    private membersService: MembersService) {}
 
-  searchTerm = '';
-  segmentValue: string = 'miembros';
-  // users: Members[] = [
-  //   { name: 'George Lindeof', photo: 'https://ionicframework.com/docs/img/demos/avatar.svg', email: 'george@domain.com', isActive: true, role: 'miembros' },
-  //   { name: 'Alice Johnson', photo: 'https://ionicframework.com/docs/img/demos/avatar.svg', email: 'alice@domain.com', isActive: true, role: 'miembros' },
-  //   { name: 'Bob Smith', photo: 'https://ionicframework.com/docs/img/demos/avatar.svg', email: 'bob@domain.com', isActive: true, role: 'miembros' },
-  //   { name: 'Catherine Zeta', photo: 'https://ionicframework.com/docs/img/demos/avatar.svg', email: 'catherine@domain.com', isActive: true, role: 'miembros' },
-  //   { name: 'Daniel Craig', photo: 'https://ionicframework.com/docs/img/demos/avatar.svg', email: 'daniel@domain.com', isActive: true, role: 'miembros' },
-  //   { name: 'Eva Green', photo: 'https://ionicframework.com/docs/img/demos/avatar.svg', email: 'eva@domain.com', isActive: true, role: 'miembros' },
-  //   { name: 'Frank Underwood', photo: 'https://ionicframework.com/docs/img/demos/avatar.svg', email: 'frank@domain.com', isActive: true, role: 'miembros' },
-  //   { name: 'Grace Kelly', photo: 'https://ionicframework.com/docs/img/demos/avatar.svg', email: 'grace@domain.com', isActive: true, role: 'miembros' },
-  //   { name: 'Hugh Jackman', photo: 'https://ionicframework.com/docs/img/demos/avatar.svg', email: 'hugh@domain.com', isActive: true, role: 'miembros' },
-  //   { name: 'Isla Fisher', photo: 'https://ionicframework.com/docs/img/demos/avatar.svg', email: 'isla@domain.com', isActive: true, role: 'miembros' },
-  //   { name: 'Jack Ryan', photo: 'https://lh3.googleusercontent.com/a/ACg8ocJ1kC00P6IWGLLUMFnamSYZ_l402ptDozectaPc4QAC1yyLIJk=s288-c-no', email: 'jack@domain.com', isActive: true, role: 'admins' },
-  //   { name: 'Kate Winslet', photo: 'https://lh3.googleusercontent.com/a/ACg8ocJ1kC00P6IWGLLUMFnamSYZ_l402ptDozectaPc4QAC1yyLIJk=s288-c-no', email: 'kate@domain.com', isActive: true, role: 'admins' },
-  //   { name: 'Leonardo DiCaprio', photo: 'https://lh3.googleusercontent.com/a/ACg8ocJ1kC00P6IWGLLUMFnamSYZ_l402ptDozectaPc4QAC1yyLIJk=s288-c-no', email: 'leo@domain.com', isActive: true, role: 'admins' },
-  // ];
+  ngOnInit() {
+    this.loadMembers();
+  }
   
-  filteredUsers: Members[] = [];
+  /**
+   * Carga todos los miembros y aplica el filtro actual.
+  */
+  loadMembers() {
+    this.membersService.getMembers().subscribe(members => {
+      this.members = members;
+      this.filterUsers();
+    });
+  }
 
-  // ngOnInit() {
-  //   this.filterUsers();
-  // }
+  /**
+   * Filtra la lista de miembros por segmento y término de búsqueda.
+  */
+  filterUsers() {
+    this.filteredUsers = this.members.filter(user =>
+      user.role === this.segmentValue &&
+      user.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
+  }
 
-  // filterUsers() {
-  //   this.filteredUsers = this.users.filter(user =>
-  //     user.role === this.segmentValue &&
-  //     user.name.toLowerCase().includes(this.searchTerm.toLowerCase())
-  //   );
-  // }
+  /**
+   * Cambia el segmento y actualiza el filtro de miembros.
+   * @param event - Evento del cambio de segmento.
+  */
+  segmentChanged(event: any) {
+    this.segmentValue = event.detail.value;
+    this.filterUsers();
+  }
 
-  // segmentChanged(event: any) {
-  //   this.segmentValue = event.detail.value;
-  //   this.filterUsers();
-  // }
-
+  /**
+    * Abre un modal para agregar un nuevo miembro.
+  */
   async addNewUser() {
     const modal = await this.modalController.create({
       component: AddMembersPage,
@@ -61,10 +68,16 @@ export class UsersPage  {
     return await modal.present();
   }
 
+  /**
+   * Importa miembros de una fuente externa.
+  */
   importMembers() {
 
   }
 
+  /**
+   * Exporta la lista de miembros.
+  */
   exportMembers() {
 
   }
@@ -73,17 +86,30 @@ export class UsersPage  {
     const selectedValue = event.detail.value;
     console.log('Filtro seleccionado:', selectedValue);
   }
-
-  editUser(user: Members) {
+  
+  /**
+   * Abre el formulario de edición para un miembro.
+   * @param member - Miembro a editar.
+  */
+  editMember(member: Members) {
 
   }
 
-  deleteUser(user: Members) {
+  /**
+   * Elimina un miembro de la lista.
+   * @param member - Miembro a eliminar.
+  */
+  deleteMember(member: Members) {
 
   }
 
-  loginAsUser(user: Members) {
-    
-  }
+
+  /**
+   * Navega a la página de perfil del miembro.
+   * @param member - Miembro a mostrar en el perfil.
+  */
+  profileMember(member:Members) {
+    this.router.navigate([`/users/member-profile/${member.id}`]);
+  }  
 
 }
