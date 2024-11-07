@@ -11,11 +11,28 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
+    <!-- <div *ngIf="!member; else memberDetails">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Cargando datos...</p>
+  </div>
+  <ng-template #memberDetails>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>{{ member?.name }}</ion-card-title>
+        <ion-card-subtitle>{{ member?.role | titlecase }}</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <p><strong>Email:</strong> {{ member?.email }}</p>
+        <p><strong>Numero de Miembro:</strong> {{ member?.memberNumber }}</p>
+        <p><strong>Estado:</strong> {{ member?.isActive ? 'Activo' : 'Inactivo' }}</p>
+        <p><strong>Dirección:</strong> {{ member?.address }}</p>
+      </ion-card-content>
+    </ion-card>
+  </ng-template> -->
 <section class="bg-gray-100 h-screen">
   <section class="relative max-w-[33rem] mx-auto">
     <img src="../../../../assets//img/background/canvas1-removebg.png" class="absolute w-full">
     <div class="w-full px-5 pt-10 relative ">
-
       <div class="relative mb-32 max-w-sm mx-auto mt-24">
           <div class="rounded-2xl overflow-hidden shadow-md bg-white">
               <div class="absolute z-10 top-2 left-2 cursor-pointer duration-200 transition-all hover:bg-black/20 rounded-full hover:text-white p-1">
@@ -84,12 +101,10 @@
                   </p>
                 </div>
               </div>
-
           </div>
       </div>
     </div>
   </section>
-
 </section>
   
 
