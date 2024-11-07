@@ -23,7 +23,6 @@ export class MemberProfilePage implements OnInit {
   }
 
   loadMemberData() {
-    // Obtener el id del miembro desde la URL
     this.activatedRoute.paramMap.pipe(
       switchMap((params) => {
         const memberId = params.get('id');
@@ -35,7 +34,7 @@ export class MemberProfilePage implements OnInit {
       })
     ).subscribe({
       next: (data: Members | undefined) => {
-        this.member = data;  // Asigna los datos del miembro
+        this.member = data;
         console.log('Miembro recibido:', this.member);
       },
       error: (error) => {

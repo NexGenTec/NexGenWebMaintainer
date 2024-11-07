@@ -10,6 +10,9 @@ import { AlertController, LoadingController, ModalController } from '@ionic/angu
   styleUrls: ['./add-members.page.scss'],
 })
 export class AddMembersPage {
+
+  private memberPhoto = 'https://ionicframework.com/docs/img/demos/avatar.svg';
+  private adminPhoto = 'https://res.cloudinary.com/drju7lpxl/image/upload/v1713219933/NexGen/logo/mainLogo.webp';
   memberForm: FormGroup;
   selectedFile: File | null = null;
   previewUrl: string | null = null;
@@ -44,9 +47,14 @@ export class AddMembersPage {
       });
       await loading.present();
 
+      let photoUrl = this.memberForm.value.role === 'admins' 
+        ? this.adminPhoto 
+        : this.memberPhoto;
+
       const memberData: Members = {
         ...this.memberForm.value,
-        memberNumber: this.memberNumber
+        memberNumber: this.memberNumber,
+        photo: photoUrl
       };
 
       this.membersService.addMember(memberData).then(async () => {
