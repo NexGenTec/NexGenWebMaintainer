@@ -75,4 +75,8 @@ export class AddMembersPage {
     });
     await alert.present();
   }
+
+  closeModal() {
+    this.modalController.dismiss();
+  }
 }

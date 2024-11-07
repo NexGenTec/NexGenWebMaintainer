@@ -11,12 +11,24 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <h1 class="text-3xl font-bold underline">
-    Hello world!
-  </h1>
-  <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-    Button
-  </button>
+  <!-- <div *ngIf="!member; else memberDetails">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Cargando datos...</p>
+  </div>
+  <ng-template #memberDetails>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>{{ member?.name }}</ion-card-title>
+        <ion-card-subtitle>{{ member?.role | titlecase }}</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <p><strong>Email:</strong> {{ member?.email }}</p>
+        <p><strong>Numero de Miembro:</strong> {{ member?.memberNumber }}</p>
+        <p><strong>Estado:</strong> {{ member?.isActive ? 'Activo' : 'Inactivo' }}</p>
+        <p><strong>Dirección:</strong> {{ member?.address }}</p>
+      </ion-card-content>
+    </ion-card>
+  </ng-template> -->
 
 
 </ion-content>
