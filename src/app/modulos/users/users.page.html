@@ -52,9 +52,9 @@
         <ion-label>Miembros</ion-label>
       </ion-item-divider>
       <ion-item lines="none" *ngFor="let member of filteredUsers">
-        <!-- <ion-thumbnail slot="start">
-          <img [src]="user.photo" />
-        </ion-thumbnail> -->
+        <ion-thumbnail>
+          <img [src]="member.photo" />
+        </ion-thumbnail>
         <ion-label>
           <h2>{{ member.name }}</h2>
           <p>{{ member.email }}</p>
@@ -76,12 +76,12 @@
   
     <ion-item-group *ngIf="segmentValue === 'admins'">
       <ion-item-divider color="light">
-        <ion-label>Admins</ion-label>
+        <ion-label>Administradores</ion-label>
       </ion-item-divider>
       <ion-item lines="none" *ngFor="let admin of filteredUsers">
-        <!-- <ion-thumbnail slot="start">
-          <img [src]="user.photo" />
-        </ion-thumbnail> -->
+        <ion-thumbnail slot="start">
+          <img [src]="admin.photo" />
+        </ion-thumbnail>
         <ion-label>
           <h2>{{ admin.name }}</h2>
           <p>{{ admin.email }}</p>
