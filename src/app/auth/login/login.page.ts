@@ -49,12 +49,12 @@ export class LoginPage implements OnInit {
           name: firebaseUser.displayName || ''
         };
         this.userService.setCurrentUser(user);
-        this.toastService.presentToast('Inicio de sesión exitoso', 3000, 'bottom', 'success');
+        this.toastService.presentToast('Inicio de sesión exitoso', 3000, 'top', 'success');
         this.router.navigate(['/home']);
       }
     } catch (error) {
       console.error('Error al iniciar sesión', error);
-      this.toastService.presentToast('Error al iniciar sesión', 3000, 'bottom', 'danger');
+      this.toastService.presentToast('Error al iniciar sesión', 3000, 'top', 'danger');
     } finally {
       loading.dismiss();
     }
