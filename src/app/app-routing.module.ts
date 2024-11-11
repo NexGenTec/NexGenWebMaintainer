@@ -4,6 +4,19 @@ import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   {
+    path: '',
+    redirectTo: '',
+    pathMatch: 'full'
+  },
+  {
+    path: '',
+    loadChildren: () => import('../app/auth/login//login.module').then(m => m.LoginPageModule)
+  },
+  {
+    path: 'recover-password',
+    loadChildren: () => import('./auth/recover-password/recover-password.module').then( m => m.RecoverPasswordPageModule)
+  },
+  {
     path: 'home',
     loadChildren: () => import('./home/home.module').then(m => m.HomePageModule),
     canActivate: [AuthGuard]
@@ -44,14 +57,9 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: '',
-    redirectTo: 'login',
-    pathMatch: 'full'
-  },
-  {
-    path: 'login',
-    loadChildren: () => import('./login/login.module').then(m => m.LoginPageModule)
-  },
+    path: '**',
+    redirectTo: ''
+  }
 ];
 
 @NgModule({
