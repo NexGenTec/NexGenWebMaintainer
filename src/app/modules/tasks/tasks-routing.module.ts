@@ -7,6 +7,14 @@ const routes: Routes = [
   {
     path: '',
     component: TasksPage
+  },
+  {
+    path: 'add-task',
+    loadChildren: () => import('./add-task/add-task.module').then( m => m.AddTaskPageModule)
+  },
+  {
+    path: 'view-task/:id',
+    loadChildren: () => import('./view-task/view-task.module').then( m => m.ViewTaskPageModule)
   }
 ];
 

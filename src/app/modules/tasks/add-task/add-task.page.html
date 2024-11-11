@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Agregar Tarea</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- Validación visual del título -->
+  <ion-item [class.invalid]="!task.title.trim()">
+    <ion-label position="floating">Título</ion-label>
+    <ion-input [(ngModel)]="task.title" type="text" required></ion-input>
+  </ion-item>
+
+  <!-- Descripción -->
+  <ion-item [class.invalid]="!task.description.trim()">
+    <ion-label position="floating">Descripción</ion-label>
+    <ion-textarea [(ngModel)]="task.description" required></ion-textarea>
+  </ion-item>
+
+  <!-- Estado -->
+  <ion-item>
+    <ion-label>Estado</ion-label>
+    <ion-select [(ngModel)]="task.status" required>
+      <ion-select-option value="pending">Pendiente</ion-select-option>
+      <ion-select-option value="in-progress">En Progreso</ion-select-option>
+      <ion-select-option value="completed">Completada</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <!-- El botón se deshabilita si el formulario no es válido -->
+  <ion-button expand="full" (click)="saveTask()" [disabled]="!isFormValid()">Guardar Tarea</ion-button>
+</ion-content>
