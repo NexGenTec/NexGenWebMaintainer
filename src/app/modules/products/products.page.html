@@ -1,13 +1,57 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>products</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Productos</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">products</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <!-- Lista de productos organizada en dos columnas -->
+  <ion-grid>
+    <ion-row>
+      <!-- Recorremos los productos en la lista -->
+      <ion-col size="6" *ngFor="let product of products">
+        <ion-card>
+          <img [src]="product.imageUrl" alt="{{ product.name }}" />
+          <ion-card-header>
+            <ion-card-title>{{ product.name }}</ion-card-title>
+            <ion-card-subtitle>{{ product.category }}</ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            <p><strong>Precio:</strong> {{ product.price | currency }}</p>
+            <p><strong>Descripción:</strong> {{ product.description }}</p>
+            <!-- <p><strong>Color:</strong> {{ product.color }}</p> -->
+            <!-- <p><strong>Disponibilidad:</strong> {{ product.availability ? 'Disponible' : 'No Disponible' }}</p>
+            <p><strong>Calificación:</strong> {{ product.rating }}</p> -->
+            
+            <!-- Mostrar la lista de reseñas si existen -->
+            <!-- <ng-container *ngIf="product.reviews && product.reviews.length > 0">
+              <p><strong>Reseñas:</strong></p>
+              <ion-list>
+                <ion-item *ngFor="let review of product.reviews">
+                  <ion-label>
+                    <p><strong>Usuario:</strong> {{ review.userId }}</p>
+                    <p>{{ review.comment }} ({{ review.rating }} estrellas)</p>
+                  </ion-label>
+                </ion-item>
+              </ion-list>
+            </ng-container> -->
+
+            <!-- Botones de editar y eliminar -->
+            <ion-buttons slot="end">
+              <ion-button (click)="editProduct(product)">Editar</ion-button>
+              <ion-button color="danger" (click)="deleteProduct(product)">Eliminar</ion-button>
+            </ion-buttons>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- Botón para agregar producto -->
+  <ion-footer>
+    <ion-button expand="full" (click)="openAddProductForm()">Agregar Producto</ion-button>
+  </ion-footer>
 </ion-content>

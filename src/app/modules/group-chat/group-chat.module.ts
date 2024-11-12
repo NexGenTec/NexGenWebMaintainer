@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { GroupChatPageRoutingModule } from './group-chat-routing.module';
 
 import { GroupChatPage } from './group-chat.page';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    GroupChatPageRoutingModule
+    GroupChatPageRoutingModule,
+    AngularFirestoreModule,
   ],
   declarations: [GroupChatPage]
 })

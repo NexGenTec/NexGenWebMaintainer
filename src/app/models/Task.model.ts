@@ -15,3 +15,31 @@ export interface Task {
   subtasks?: Task[];  // Subtareas anidadas, para tareas complejas
   attachments?: string[];  // URLs de archivos adjuntos
 }
+
+
+// export interface Task {
+//   id: string;
+//   projectId: string;
+//   title: string;
+//   description: string;
+//   assignedTo: string;
+//   status: 'toDo' | 'inProgress' | 'completed';
+//   priority: 'low' | 'medium' | 'high';
+//   dueDate?: Date;
+//   createdAt: Date;
+//   tags?: string[];
+//   subTasks?: SubTask[];
+//   changeHistory: ChangeLog[];
+// }
+
+// export interface SubTask {
+//   id: string;
+//   title: string;
+//   completed: boolean;
+// }
+
+// export interface ChangeLog {
+//   changedBy: string;
+//   changedAt: Date;
+//   changes: string;
+// }
