@@ -12,8 +12,10 @@ import { User } from 'src/app/models/User.models';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-  email: string = 'nexgentechnologies2024@gmail.com';
-  password: string = 'd1#TvpB59[%0';
+  // email: string = 'nexgentechnologies2024@gmail.com';
+  // password: string = 'd1#TvpB59[%0';
+  email!: string;
+  password!: string;
 
   constructor(
     private authService: AuthService,
