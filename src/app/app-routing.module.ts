@@ -27,6 +27,11 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'products',
+    loadChildren: () => import('./modules/products/products.module').then( m => m.ProductsPageModule),
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'control-panel',
     loadChildren: () => import('./modules/control-panel/control-panel.module').then( m => m.ControlPanelPageModule),
     canActivate: [AuthGuard]
@@ -59,7 +64,7 @@ const routes: Routes = [
   {
     path: '**',
     redirectTo: ''
-  }
+  },
 ];
 
 @NgModule({
