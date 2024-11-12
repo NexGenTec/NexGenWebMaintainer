@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tasks"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Detalles de la Tarea</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item *ngIf="task">
+    <ion-label>
+      <h2>{{ task.title }}</h2>
+      <p>{{ task.description }}</p>
+      <p><strong>Estado:</strong> {{ task.status }}</p>
+      <p><strong>Creada el:</strong> {{ task.createdAt.toDate() | date: 'yyyy-MM-dd HH:mm:ss' }}</p>
+      <p *ngIf="task.dueDate"><strong>Fecha de vencimiento:</strong> {{ task.dueDate.toDate() | date }}</p>
+      <p *ngIf="task.completedAt"><strong>Fecha de finalización:</strong> {{ task.completedAt.toDate() | date }}</p>
+      <p *ngIf="task.priority"><strong>Prioridad:</strong> {{ task.priority }}</p>
+    </ion-label>
+  </ion-item>  
+
+  <!-- Mostrar mensaje si no se encuentra la tarea -->
+  <ion-item *ngIf="!task">
+    <ion-label>
+      <h2>Tarea no encontrada</h2>
+    </ion-label>
+  </ion-item>
+</ion-content>

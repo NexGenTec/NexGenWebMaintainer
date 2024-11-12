@@ -18,6 +18,7 @@ export class AppComponent implements OnInit {
     { title: 'Logs', link: '/logs' },
     { title: 'Group Chat', link: '/group-chat' },
     { title: 'Reports', link: '/reports' },
+    { title: 'Products', link: '/products' },
     { title: 'Control Panel', link: '/control-panel' },
   ];  
   isLoggedIn = false;
