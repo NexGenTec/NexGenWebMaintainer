@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Agregar Tarea</ion-title>
+    <ion-title>{{ task.id ? 'Editar Tarea' : 'Agregar Tarea' }}</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="closeModal()">
         <ion-icon name="close"></ion-icon>
@@ -9,7 +9,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="task">
   <!-- Validación visual del título -->
   <ion-item [class.invalid]="!task.title.trim()">
     <ion-label position="floating">Título</ion-label>

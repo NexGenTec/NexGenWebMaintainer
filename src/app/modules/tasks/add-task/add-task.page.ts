@@ -1,27 +1,43 @@
-import { Component } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { Component, OnInit } from '@angular/core';
+import { ModalController, NavParams } from '@ionic/angular';
 import { Timestamp } from 'firebase/firestore';
 import { Task } from 'src/app/models/Task.model';
-import { TaskService } from 'src/app/service/task.service';
 
 @Component({
   selector: 'app-add-task',
   templateUrl: './add-task.page.html',
   styleUrls: ['./add-task.page.scss'],
 })
-export class AddTaskPage {
+export class AddTaskPage implements OnInit {
 
   task: Task = {
     title: '',
     description: '',
     status: 'pending',
-    createdAt: Timestamp.fromDate(new Date()) // Utiliza el Timestamp de Firestore
+    createdAt: Timestamp.fromDate(new Date())
   };
 
   constructor(
     private modalController: ModalController,
-    private taskService: TaskService,
+    private navParams: NavParams, // Para recibir los datos pasados al modal
   ) {}
+
+  ngOnInit() {
+    const taskData = this.navParams.get('task');
+    console.log('Tarea recibida en el modal:', taskData);
+  
+    if (taskData) {
+      this.task = { ...taskData };
+    } else {
+      // Si no se pasa ninguna tarea, la inicializamos con valores vacíos
+      this.task = {
+        title: '',
+        description: '',
+        status: 'pending',
+        createdAt: Timestamp.fromDate(new Date())
+      };
+    }
+  }    
 
   // Cierra el modal sin enviar nada
   closeModal() {
@@ -39,6 +55,8 @@ export class AddTaskPage {
   }
 
   isFormValid(): boolean {
-    return this.task.title.trim() !== '' && this.task.status !== undefined && this.task.description.trim() !== undefined;
+    return this.task.title.trim() !== '' && 
+           this.task.description.trim() !== '' && 
+           ['pending', 'in-progress', 'completed'].includes(this.task.status);
   }
 }
