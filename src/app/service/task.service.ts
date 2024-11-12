@@ -3,7 +3,6 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/comp
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Task } from '../models/Task.model';
-import { Timestamp } from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -59,11 +58,15 @@ export class TaskService {
    */
   addTask(task: Task): Promise<void> {
     const taskId = this.firestore.createId();
-    return this.firestore.collection('tasks').doc(taskId).set({
+    const taskData = {
       ...task,
+      createdAt: new Date(),  // Usamos una fecha simple como objeto
       id: taskId
-    });
+    };
+  
+    return this.firestore.collection('tasks').doc(taskId).set(taskData);
   }
+  
 
   /**
    * Actualiza una tarea existente en la colección.

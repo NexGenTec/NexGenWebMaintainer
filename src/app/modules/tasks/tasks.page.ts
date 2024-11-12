@@ -18,7 +18,7 @@ export class TasksPage implements OnInit {
     private taskService: TaskService,
     private modalController: ModalController,
     private alertController: AlertController,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit() {
@@ -28,27 +28,25 @@ export class TasksPage implements OnInit {
   }
 
   async openAddTaskModal(task?: Task) {
+    console.log('Tarea que se pasa al modal:', task); // Verifica el valor de task
+  
     const modal = await this.modalController.create({
       component: AddTaskPage,
-      componentProps: {
-        task: task || null  // Si hay tarea, la pasa al modal, si no, pasa null
-      }
+      componentProps: { task: task || null }
     });
-
+  
     modal.onDidDismiss().then((data) => {
       if (data.data) {
         if (task) {
-          // Si se está editando, actualiza la tarea
           this.taskService.updateTask(task.id!, data.data);
         } else {
-          // Si es una nueva tarea, agrega la tarea
           this.taskService.addTask(data.data);
         }
       }
     });
-
-    return await modal.present();
-  }
+  
+    await modal.present();
+  }  
   
   // Ver detalles de la tarea
   viewTask(task: Task) {

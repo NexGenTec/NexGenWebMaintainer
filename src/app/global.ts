@@ -18,7 +18,8 @@ export const Messages = {
       CREATED: 'Tarea creada exitosamente.',
       UPDATED: 'Tarea actualizada correctamente.',
       DELETED: 'Tarea eliminada con éxito.',
-    },
+      VIEWED: 'Tarea visualizada correctamente.'
+    },    
     LOGS: {
       CREATED: 'Registro creado exitosamente.',
       UPDATED: 'Registro actualizado correctamente.',

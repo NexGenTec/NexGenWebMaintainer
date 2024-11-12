@@ -16,7 +16,6 @@
       <p><strong>Creada el:</strong> {{ task.createdAt.toDate() | date: 'yyyy-MM-dd HH:mm:ss' }}</p>
       <p *ngIf="task.dueDate"><strong>Fecha de vencimiento:</strong> {{ task.dueDate.toDate() | date }}</p>
       <p *ngIf="task.completedAt"><strong>Fecha de finalización:</strong> {{ task.completedAt.toDate() | date }}</p>
-      <p *ngIf="task.priority"><strong>Prioridad:</strong> {{ task.priority }}</p>
     </ion-label>
   </ion-item>  
 
