@@ -4,21 +4,24 @@
       <ion-img src="https://lh3.googleusercontent.com/a/ACg8ocJ1kC00P6IWGLLUMFnamSYZ_l402ptDozectaPc4QAC1yyLIJk=s288-c-no" style="border-radius: 50%;"></ion-img>
     </div>
     <ion-content class="ion-padding">
-      <!-- <ion-list class="ion-background-menu rounded-top">
+      <ion-list class="ion-background-menu rounded-top">
         <ion-list-header>Bienvenido, {{ userName }}</ion-list-header>
-        <ion-note>
+        <!-- <ion-note>
           {{ userEmail }}
-        </ion-note>
-      </ion-list> -->
+        </ion-note> -->
+      </ion-list>
       <ion-list class="ion-background-menu rounded-bottom" class="ion-background-menu2">
         <ion-list-header>Modulos</ion-list-header>
-        <ion-reorder-group [disabled]="false" (ionItemReorder)="handleReorder($any($event))">
+        <!-- <ion-reorder-group [disabled]="false" (ionItemReorder)="handleReorder($any($event))">
           <ion-item *ngFor="let item of items" [routerLink]="item.link">
-            <!-- <ion-icon [name]="item.icon" slot="end"></ion-icon> -->
             <ion-label>{{ item.title }} </ion-label>
             <ion-reorder slot="end"></ion-reorder>
           </ion-item>
-        </ion-reorder-group>
+        </ion-reorder-group> -->
+        <ion-item (click)="logout()">
+          Cerrar Sesion
+          <ion-icon name="log-out-outline" slot="end" color="danger"></ion-icon>
+        </ion-item>
       </ion-list>
     </ion-content>
   </ion-menu>

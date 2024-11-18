@@ -33,7 +33,6 @@ export class LoginPage implements OnInit {
 
   async onLogin() {
     const loading = await this.loadingController.create({
-      message: 'Cargando...',
       mode: 'ios',
       duration: 3000,
       spinner: 'crescent',
@@ -48,7 +47,6 @@ export class LoginPage implements OnInit {
         const user: User = {
           id: firebaseUser.uid,
           email: firebaseUser.email || '',
-          name: firebaseUser.displayName || ''
         };
         this.userService.setCurrentUser(user);
         this.toastService.presentToast('Inicio de sesión exitoso', 3000, 'top', 'success');

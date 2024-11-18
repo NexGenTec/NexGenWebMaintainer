@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { AlertController, LoadingController, MenuController } from '@ionic/angular';
 import { AuthService } from '../service/auth.service';
+import { Roles } from '../models/Roles.model';
+import { AuthenticationService } from '../service/authentication.service';
 
 @Component({
   selector: 'app-home',
@@ -13,11 +15,24 @@ export class HomePage {
     private menu: MenuController,
     private authService: AuthService,
     private loadingController: LoadingController,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private authenticationService: AuthenticationService
   ) {}
 
   openMenu() {
     this.menu.open();
+  }
+
+  canAccessUsers(): boolean {
+    const allowedRoles = [
+      Roles.Editor,
+      Roles.Moderator,
+      Roles.Manager,
+      Roles.Admin,
+      Roles.SuperAdmin
+    ];
+    const currentRole = this.authenticationService.getUserRole();
+    return allowedRoles.includes(currentRole!);
   }
 
   async logout() {

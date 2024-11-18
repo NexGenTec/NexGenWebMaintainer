@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './service/auth.service';
 import { Router } from '@angular/router';
-import { ItemReorderEventDetail } from '@ionic/angular';
+import { ItemReorderEventDetail, MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-root',
@@ -25,7 +25,10 @@ export class AppComponent implements OnInit {
   userName: string = '';
   userEmail: string = '';
 
-  constructor(private authService: AuthService,private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private menu:MenuController)  {}
 
   ngOnInit() {
     this.authService.isLoggedIn$.subscribe((loggedIn) => {
@@ -56,6 +59,7 @@ export class AppComponent implements OnInit {
   }  
 
   logout() {
+    this.menu.close();
     this.authService.logout();
   }
 }
