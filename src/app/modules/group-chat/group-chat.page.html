@@ -3,29 +3,40 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Productos</ion-title>
+    <ion-title>Chat</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <!-- Mensajes del chat -->
+<ion-content [fullscreen]="true" class="chat-content">
+  <!-- Mensajes -->
   <ion-list>
-    <ion-item *ngFor="let message of messages | async">
-      <ion-label>
-        <h2>{{ message.senderId }}</h2>
+    <ion-item *ngFor="let message of messages | async" [class.self]="message.senderId === currentUserId">
+      <ion-label class="message-bubble">
+        <h3>{{ message.senderId === currentUserId ? 'Tú' : 'Amigo' }}</h3>
         <p>{{ message.message }}</p>
         <small>{{ message.timestamp.toDate() | date:'short' }}</small>
       </ion-label>
     </ion-item>
+
+    <!-- Indicador de escritura -->
+    <ion-item *ngIf="isTyping" class="typing-indicator">
+      <ion-label>Amigo está escribiendo...</ion-label>
+    </ion-item>
   </ion-list>
-
-  <!-- Campo para escribir mensaje -->
-  <ion-item>
-    <ion-input [(ngModel)]="newMessage" placeholder="Escribe tu mensaje..."></ion-input>
-  </ion-item>
-
-  <!-- Botón para enviar mensaje -->
-  <ion-footer>
-    <ion-button expand="full" (click)="sendMessage()">Enviar</ion-button>
-  </ion-footer>
 </ion-content>
+
+<!-- Input para escribir mensaje y botón de enviar -->
+<ion-footer class="footer">
+  <ion-item lines="none" class="input-container">
+    <ion-textarea 
+      auto-grow="true" 
+      [(ngModel)]="newMessage" 
+      placeholder="Escribe tu mensaje..." 
+      (keyup.enter)="sendMessage()" 
+      (ionFocus)="onTyping()" 
+      (ionBlur)="onStopTyping()">
+    </ion-textarea>
+  </ion-item>
+  <ion-button expand="full" (click)="sendMessage()" color="primary">Enviar</ion-button>
+</ion-footer>
+
