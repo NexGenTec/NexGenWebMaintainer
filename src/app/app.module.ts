@@ -11,6 +11,7 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { environment } from '../environments/environment.prod';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { SharedModule } from './directives/shared.module';
 
 const routes: Routes = [
 ];
@@ -25,6 +26,7 @@ const routes: Routes = [
     AngularFireAuthModule,
     ReactiveFormsModule,
     AngularFirestoreModule,
+    SharedModule,
     RouterModule.forRoot(routes, { useHash: true }),
   ],
   providers: [

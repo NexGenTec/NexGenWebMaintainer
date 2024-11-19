@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './service/auth.service';
-import { Router } from '@angular/router';
-import { ItemReorderEventDetail, MenuController } from '@ionic/angular';
+import { AlertController, ItemReorderEventDetail, LoadingController, MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +10,6 @@ import { ItemReorderEventDetail, MenuController } from '@ionic/angular';
 export class AppComponent implements OnInit {
 
   items = [
-    { title: 'Home', link: '/home' },
     { title: 'Users', link: '/users' },
     { title: 'Projects', link: '/projects' },
     { title: 'Tasks', link: '/tasks' },
@@ -24,26 +22,17 @@ export class AppComponent implements OnInit {
   isLoggedIn = false;
   userName: string = '';
   userEmail: string = '';
+  userRole: string = '';
 
   constructor(
     private authService: AuthService,
-    private router: Router,
-    private menu:MenuController)  {}
+    private menu: MenuController,
+    private alertController:AlertController,
+    private loadingController:LoadingController )  {}
 
   ngOnInit() {
     this.authService.isLoggedIn$.subscribe((loggedIn) => {
       this.isLoggedIn = loggedIn;
-      if (loggedIn) {
-        this.authService.getCurrentUser().then((user) => {
-          if (user) {
-            this.userEmail = user.email || '';
-            this.userName = this.getDisplayNameFromEmail(this.userEmail);
-          }
-        });
-      } else {
-        this.userName = '';
-        this.userEmail = '';
-      }
     });
   }
 
@@ -56,10 +45,52 @@ export class AppComponent implements OnInit {
     const movedItem = this.items.splice(ev.detail.from, 1)[0];
     this.items.splice(ev.detail.to, 0, movedItem);
     ev.detail.complete();
-  }  
-
-  logout() {
-    this.menu.close();
-    this.authService.logout();
   }
+  
+  async logout() {
+    const alert = await this.alertController.create({
+      header: 'Cerrar Sesion?',
+      mode: 'ios',
+      message: 'Esta seguro de cerrar la sesion?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('User cancelled logout');
+          }
+        },
+        {
+          text: 'Salir',
+          role: 'destructive',
+          handler: async () => {
+            // Cerrar el menú inmediatamente después de confirmar la acción
+            this.menu.close();
+  
+            const loading = await this.loadingController.create({
+              mode: 'ios',
+              message: 'Cerrando sesion...',
+              duration: 1500,
+            });
+            await loading.present();
+  
+            setTimeout(() => {
+              this.authService.logout()
+                .then(() => {
+                  console.log('Logged out successfully');
+                })
+                .catch(error => {
+                  console.error('Error during logout:', error);
+                })
+                .finally(() => {
+                  loading.dismiss();
+                });
+            }, 3000);
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }  
 }

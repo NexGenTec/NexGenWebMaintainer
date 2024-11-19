@@ -1,42 +1,41 @@
 import { Injectable } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { User } from '../models/User.models';
-import { Roles } from '../models/Roles.model';
-import { RolePermissions } from '../permissions.config';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthenticationService {
   private currentUser: User | null = null;
-  private currentRole: Roles | null = null;
 
-  constructor() {
-    const storedUser = localStorage.getItem('currentUser');
-    this.currentUser = storedUser ? JSON.parse(storedUser) : null;
-    this.currentRole = this.currentUser ? this.currentUser.role as Roles : Roles.Guest; // Asignar rol
+  constructor(private firestore: AngularFirestore) {}
+
+  async getUserById(userId: string) {
+    return this.firestore.collection('users').doc(userId).ref.get();
   }
 
   setCurrentUser(user: User) {
     this.currentUser = user;
-    this.currentRole = user.role as Roles; // Establecer el rol al usuario
-    localStorage.setItem('currentUser', JSON.stringify(user));
+    sessionStorage.setItem('currentUser', JSON.stringify(user));
   }
 
   getCurrentUser(): User | null {
+    if (!this.currentUser) {
+      const storedUser = sessionStorage.getItem('currentUser');
+      if (storedUser) {
+        this.currentUser = JSON.parse(storedUser);
+      }
+    }
     return this.currentUser;
   }
 
-  getUserRole(): Roles | null {
-    return this.currentRole;
-  }
-
-  getUserPermissions() {
-    return this.currentRole ? RolePermissions[this.currentRole] : {};
+  getCurrentUserFromStorage(): User | null {
+    const storedUser = sessionStorage.getItem('currentUser');
+    return storedUser ? JSON.parse(storedUser) : null;
   }
 
   clearCurrentUser() {
     this.currentUser = null;
-    this.currentRole = null;
-    localStorage.removeItem('currentUser');
+    sessionStorage.removeItem('currentUser');
   }
 }

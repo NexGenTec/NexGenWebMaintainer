@@ -8,7 +8,7 @@ import { AuthenticationService } from './authentication.service';
   providedIn: 'root'
 })
 export class AuthService {
-  private isLoggedInSubject = new BehaviorSubject<boolean>(!!localStorage.getItem('isLoggedIn'));
+  private isLoggedInSubject = new BehaviorSubject<boolean>(!!sessionStorage.getItem('isLoggedIn'));
   isLoggedIn$ = this.isLoggedInSubject.asObservable();
 
   constructor(
@@ -20,21 +20,21 @@ export class AuthService {
       const isAuthenticated = !!user;
       this.isLoggedInSubject.next(isAuthenticated);
       if (isAuthenticated) {
-        localStorage.setItem('isLoggedIn', 'true');
+        sessionStorage.setItem('isLoggedIn', 'true');
       } else {
-        localStorage.removeItem('isLoggedIn');
+        sessionStorage.removeItem('isLoggedIn');
       }
     });
   }
 
   async login(email: string, password: string): Promise<void> {
     await this.afAuth.signInWithEmailAndPassword(email, password);
-    localStorage.setItem('isLoggedIn', 'true');
+    sessionStorage.setItem('isLoggedIn', 'true');
   }
 
   async logout(): Promise<void> {
     await this.afAuth.signOut();
-    localStorage.removeItem('isLoggedIn');
+    sessionStorage.removeItem('isLoggedIn');
     this.authService.clearCurrentUser();
     this.router.navigate(['/login']);
   }

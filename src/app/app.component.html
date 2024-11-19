@@ -6,18 +6,19 @@
     <ion-content class="ion-padding">
       <ion-list class="ion-background-menu rounded-top">
         <ion-list-header>Bienvenido, {{ userName }}</ion-list-header>
-        <!-- <ion-note>
-          {{ userEmail }}
-        </ion-note> -->
       </ion-list>
       <ion-list class="ion-background-menu rounded-bottom" class="ion-background-menu2">
         <ion-list-header>Modulos</ion-list-header>
-        <!-- <ion-reorder-group [disabled]="false" (ionItemReorder)="handleReorder($any($event))">
+        <ion-item routerLink="/home" >
+          Principal
+          <ion-icon name="home-outline" slot="end"></ion-icon>
+        </ion-item>
+        <ion-reorder-group [disabled]="false" (ionItemReorder)="handleReorder($any($event))">
           <ion-item *ngFor="let item of items" [routerLink]="item.link">
             <ion-label>{{ item.title }} </ion-label>
             <ion-reorder slot="end"></ion-reorder>
           </ion-item>
-        </ion-reorder-group> -->
+        </ion-reorder-group>
         <ion-item (click)="logout()">
           Cerrar Sesion
           <ion-icon name="log-out-outline" slot="end" color="danger"></ion-icon>

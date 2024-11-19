@@ -4,24 +4,18 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>Principal</ion-title>
-    <!-- <ion-buttons slot="end">
-      <ion-button (click)="logout()" color="danger">
-        <ion-icon name="log-out"></ion-icon>
-      </ion-button>
-    </ion-buttons> -->
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
   <div class="button-container">
-    <ion-card class="button-wrapper" *ngIf="canAccessUsers()">
+    <ion-card class="button-wrapper" *appHasRole="[Roles.Admin]"  >
       <ion-button expand="full" fill="clear" routerLink="/users" class="circle-button">
         <ion-icon name="people-outline"></ion-icon>
       </ion-button>
       <span>Users</span>
     </ion-card>
-
-    <!-- <ion-card class="button-wrapper">
+    <!-- <ion-card class="button-wrapper" >
       <ion-button expand="full" fill="clear" routerLink="/control-panel" class="circle-button">
         <ion-icon name="settings-outline"></ion-icon>
       </ion-button>

@@ -14,8 +14,6 @@ import { User } from 'src/app/models/User.models';
 export class LoginPage implements OnInit {
   email: string = 'nexgentechnologies2024@gmail.com';
   password: string = 'd1#TvpB59[%0';
-  // email!: string;
-  // password!: string;
 
   constructor(
     private authService: AuthService,
@@ -26,7 +24,9 @@ export class LoginPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    if (this.authService.isAuthenticated()) {
+    const storedUser = this.userService.getCurrentUserFromStorage();
+    if (storedUser) {
+      this.userService.setCurrentUser(storedUser);
       this.router.navigate(['/home']);
     }
   }
@@ -34,7 +34,7 @@ export class LoginPage implements OnInit {
   async onLogin() {
     const loading = await this.loadingController.create({
       mode: 'ios',
-      duration: 3000,
+      message: 'Iniciando sesión...',
       spinner: 'crescent',
     });
     await loading.present();
@@ -44,17 +44,20 @@ export class LoginPage implements OnInit {
       const firebaseUser = await this.authService.getCurrentUser();
 
       if (firebaseUser) {
-        const user: User = {
-          id: firebaseUser.uid,
-          email: firebaseUser.email || '',
-        };
-        this.userService.setCurrentUser(user);
-        this.toastService.presentToast('Inicio de sesión exitoso', 3000, 'top', 'success');
-        this.router.navigate(['/home']);
+        const userDoc = await this.userService.getUserById(firebaseUser.uid);
+        if (userDoc.exists) {
+          const existingUser = userDoc.data() as User;
+
+          this.userService.setCurrentUser(existingUser);
+          this.toastService.presentToast('Inicio de sesión exitoso', 3000, 'top', 'success');
+          this.router.navigate(['/home']);
+        } else {
+          this.toastService.presentToast('Usuario no registrado en el sistema', 3000, 'top', 'danger');
+        }
       }
     } catch (error) {
       console.error('Error al iniciar sesión', error);
-      this.toastService.presentToast('Error al iniciar sesión', 3000, 'top', 'danger');
+      this.toastService.presentToast('Credenciales inválidas o error en el servidor', 3000, 'top', 'danger');
     } finally {
       loading.dismiss();
     }
